@@ -28,6 +28,14 @@
                     <div class="status-indicator" id="statusIndicator">
                         <i class="fas fa-circle"></i>
                         <span id="statusText">Verificando...</span>
+                        <button type="button" class="btn-secondary" id="asyncAnalyzeBtn">
+                            <i class="fas fa-rocket"></i>
+                            <span>Análise Assíncrona (Recomendado)</span>
+                        </button>
+                        <button type="button" class="btn-secondary" id="validateApisBtn">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Validar APIs</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -247,6 +255,67 @@
                 </div>
             </section>
 
+            <!-- Async Progress Area -->
+            <section class="progress-section" id="asyncProgressArea" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <h3>🚀 Análise Assíncrona em Progresso</h3>
+                        <p>Processamento em segundo plano - você pode fechar esta página</p>
+                    </div>
+                    
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-info">
+                        <div class="progress-step">
+                            <span id="asyncCurrentStep">Iniciando análise...</span>
+                        </div>
+                        <div class="progress-stats">
+                            <span class="step-counter">Fase: <span id="asyncStepCounter">0/4</span></span>
+                            <span class="phase-indicator">Etapa: <span id="asyncPhase">Preparação</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-details">
+                        <div class="progress-feature">
+                            <i class="fas fa-search"></i>
+                            <span>Busca limitada a 2 rodadas (otimizado)</span>
+                        </div>
+                        <div class="progress-feature">
+                            <i class="fas fa-brain"></i>
+                            <span>Gemini + Groq fallback automático</span>
+                        </div>
+                        <div class="progress-feature">
+                            <i class="fas fa-database"></i>
+                            <span>Cache inteligente ativo</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Dashboard -->
+            <section class="dashboard-section" id="interactiveDashboard" style="display: none;">
+                <!-- Conteúdo será gerado dinamicamente -->
+            </section>
+
+            <!-- User Dashboard -->
+            <section class="user-dashboard-section">
+                <div class="container">
+                    <div class="dashboard-header">
+                        <h2>📊 Dashboard do Usuário</h2>
+                        <button class="btn-secondary" id="refreshDashboardBtn">
+                            <i class="fas fa-sync"></i> Atualizar
+                        </button>
+                    </div>
+                    <div id="userDashboard" class="user-dashboard-content">
+                        <!-- Conteúdo será carregado dinamicamente -->
+                    </div>
+                </div>
+            </section>
+
             <!-- Results Section -->
             <section class="results-section" id="resultsArea" style="display: none;">
                 <div class="results-container">
@@ -319,6 +388,7 @@
     <script src="/static/js/main.js"></script>
     <script src="/static/js/upload.js"></script>
     <script src="/static/js/analysis.js"></script>
+    <script src="/static/js/async_analysis.js"></script>
 </body>
 </html>
 

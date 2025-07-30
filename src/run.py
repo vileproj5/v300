@@ -52,8 +52,10 @@ logger = logging.getLogger(__name__)
 from routes.analysis import analysis_bp
 from routes.user import user_bp
 from routes.pdf_generator import pdf_bp
+from routes.async_analysis import async_bp
 from services.production_search_manager import production_search_manager
 from services.production_content_extractor import production_content_extractor
+from services.api_validator import api_validator
 
 def create_app():
     """Cria e configura a aplicação Flask"""
@@ -105,6 +107,7 @@ def create_app():
     app.register_blueprint(analysis_bp, url_prefix='/api')
     app.register_blueprint(user_bp, url_prefix='/api')
     app.register_blueprint(pdf_bp, url_prefix='/api')
+    app.register_blueprint(async_bp, url_prefix='/api')
     
     # Service Worker route
     @app.route('/sw.js')
@@ -277,6 +280,19 @@ def cleanup_on_exit():
 def main():
     """Função principal para executar a aplicação"""
     try:
+        # Valida APIs no startup
+        logger.info("🔍 Validando APIs no startup...")
+        validation_results = api_validator.validate_all_apis()
+        
+        if not api_validator.is_system_healthy():
+            logger.error("❌ Sistema não está saudável - APIs críticas inválidas")
+            logger.error("Configure as APIs necessárias antes de continuar")
+            for error in validation_results['errors']:
+                logger.error(f"  - {error}")
+            # Continua mesmo com erros para permitir configuração
+        
+        logger.info(f"📊 Status das APIs: {api_validator.get_validation_summary()}")
+        
         # Configura handlers de sinal
         setup_signal_handlers()
         atexit.register(cleanup_on_exit)
